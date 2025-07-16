@@ -1,123 +1,81 @@
-// Definimos las materias con correlatividades (ejemplo simplificado)
+// Definición de materias con estructura completa
 const materias = [
-  { nombre: "Matemática", anio: 1, cuatri: 1 },
-  { nombre: "Física", anio: 1, cuatri: 1 },
-  { nombre: "Química General", anio: 1, cuatri: 1 },
-  { nombre: "Matemática II", anio: 1, cuatri: 2, correlativas: ["Matemática"] },
-  { nombre: "Física II", anio: 1, cuatri: 2, correlativas: ["Física", "Matemática"] },
-  { nombre: "Química Inorgánica", anio: 1, cuatri: 2, correlativas: ["Física", "Química General"] },
-  { nombre: "Biología", anio: 2, cuatri: 1, correlativas: ["Química General"] },
-  { nombre: "Química Orgánica", anio: 2, cuatri: 1, correlativas: ["Química General", "Química Inorgánica"] },
-  { nombre: "Química Analítica I", anio: 2, cuatri: 1, correlativas: ["Química General", "Química Inorgánica"] },
-  { nombre: "Química Orgánica II", anio: 2, cuatri: 2, correlativas: ["Química Inorgánica", "Química Orgánica"] },
-  { nombre: "Química Analítica II", anio: 2, cuatri: 2, correlativas: ["Física II", "Química Analítica I"] },
-  { nombre: "Fisicoquímica", anio: 2, cuatri: 2, correlativas: ["Física II", "Química Analítica I"] },
-  { nombre: "Bioestadística", anio: 3, cuatri: 1, correlativas: ["Matemática II", "Biología"] },
-  { nombre: "Química Biológica I", anio: 3, cuatri: 1, correlativas: ["Biología", "Química Orgánica II", "Química Analítica II", "Fisicoquímica"] },
-  { nombre: "Anatomía Humana y Animales de Laboratorio", anio: 3, cuatri: 1, correlativas: ["Biología"] },
-  { nombre: "Inglés Técnico", anio: 3, cuatri: 1 },
-  { nombre: "Fisiología", anio: 3, cuatri: 2, correlativas: ["Química Biológica I", "Anatomía Humana y Animales de Laboratorio"] },
-  { nombre: "Química Biológica II", anio: 3, cuatri: 2, correlativas: ["Anatomía Humana y Animales de Laboratorio", "Química Biológica I"] },
-  { nombre: "Histología Normal y Elementos de Histopatología", anio: 3, cuatri: 2, correlativas: ["Anatomía Humana y Animales de Laboratorio"] },
-  { nombre: "Informática", anio: 4, cuatri: 1 },
-  { nombre: "Microbiología General", anio: 4, cuatri: 1, correlativas: ["Química Biológica I"] },
-  { nombre: "Inmunología Básica", anio: 4, cuatri: 1, correlativas: ["Fisiología", "Química Biológica II", "Histología Normal y Elementos de Histopatología"] },
-  { nombre: "Biología Celular", anio: 4, cuatri: 2 },
-  { nombre: "Elementos de Farmacodinamia", anio: 4, cuatri: 2, correlativas: ["Fisiología"] },
-  { nombre: "Inmunología Clínica", anio: 4, cuatri: 2, correlativas: ["Microbiología General", "Inmunología Básica"] },
-  { nombre: "Bioquímica Clínica I", anio: 5, cuatri: 1, correlativas: ["Biología Celular", "Inmunología Básica"] },
-  { nombre: "Bacteriología", anio: 5, cuatri: 1, correlativas: ["Inmunología Básica", "Elementos de Farmacodinamia"] },
-  { nombre: "Bromatología", anio: 5, cuatri: 1, correlativas: ["Microbiología General"] },
-  { nombre: "Bioquímica Clínica II", anio: 5, cuatri: 2, correlativas: ["Bioquímica Clínica I"] },
-  { nombre: "Virología", anio: 5, cuatri: 2, correlativas: ["Microbiología General", "Inmunología Clínica"] },
-  { nombre: "Micología", anio: 5, cuatri: 2, correlativas: ["Inmunología Clínica", "Bacteriología"] },
-  { nombre: "Bioquímica Clínica III", anio: 6, cuatri: 1, correlativas: ["Bioquímica Clínica II"] },
-  { nombre: "Parasitología", anio: 6, cuatri: 1, correlativas: ["Inmunología Clínica"] },
-  { nombre: "Toxicología", anio: 6, cuatri: 1, correlativas: ["Química Biológica II", "Elementos de Farmacodinamia", "Bioquímica Clínica I"] },
-  { nombre: "Epistemología y Metodología...", anio: 6, cuatri: 1 },
-  { nombre: "Práctica Profesional Supervisada", anio: 6, cuatri: 2, correlativas: ["Bioquímica Clínica II", "Bioquímica Clínica III"] },
+  // 1er Año - 1er Cuatrimestre
+  { id: "matematica1", nombre: "Matemática", anio: 1, cuatri: 1, corrs: [] },
+  { id: "fisica1", nombre: "Física", anio: 1, cuatri: 1, corrs: [] },
+  { id: "quimicageneral", nombre: "Química General", anio: 1, cuatri: 1, corrs: [] },
+
+  // 1er Año - 2do Cuatrimestre
+  { id: "matematica2", nombre: "Matemática II", anio: 1, cuatri: 2, corrs: ["matematica1"] },
+  { id: "fisica2", nombre: "Física II", anio: 1, cuatri: 2, corrs: ["fisica1", "matematica1"] },
+  { id: "quimicainorganica", nombre: "Química Inorgánica", anio: 1, cuatri: 2, corrs: ["quimicageneral", "fisica1"] },
+
+  // Agregá acá todas las demás materias siguiendo la misma estructura...
 ];
 
-// Estados posibles para materias
-const estados = ['ninguno', 'regularizada', 'aprobada'];
+// Estado inicial cargado desde localStorage
+let estadoMaterias = JSON.parse(localStorage.getItem("estadoMaterias")) || {};
 
-const mallaContainer = document.getElementById('malla-container');
+// Crear la grilla de materias agrupadas por año y cuatrimestre
+function crearMalla() {
+  const contenedor = document.getElementById("malla");
+  contenedor.innerHTML = "";
 
-// Guardar estados en localStorage para persistencia
-function guardarEstados(estadosMaterias) {
-  localStorage.setItem('estadosMaterias', JSON.stringify(estadosMaterias));
+  const agrupado = {};
+  materias.forEach((m) => {
+    const clave = `${m.anio}º Año - ${m.cuatri}º Cuatrimestre`;
+    if (!agrupado[clave]) agrupado[clave] = [];
+    agrupado[clave].push(m);
+  });
+
+  for (const titulo in agrupado) {
+    const seccion = document.createElement("div");
+    seccion.className = "seccion";
+
+    const encabezado = document.createElement("h3");
+    encabezado.textContent = titulo;
+    seccion.appendChild(encabezado);
+
+    const grilla = document.createElement("div");
+    grilla.className = "grilla";
+
+    agrupado[titulo].forEach((materia) => {
+      const btn = document.createElement("button");
+      btn.textContent = materia.nombre;
+      btn.className = "materia";
+      btn.dataset.id = materia.id;
+
+      const estado = estadoMaterias[materia.id];
+      if (estado === "aprobada") btn.classList.add("aprobada");
+      else if (estado === "regularizada") btn.classList.add("regularizada");
+
+      btn.addEventListener("click", () => cambiarEstado(materia.id, btn));
+      grilla.appendChild(btn);
+    });
+
+    seccion.appendChild(grilla);
+    contenedor.appendChild(seccion);
+  }
 }
 
-function cargarEstados() {
-  const guardados = localStorage.getItem('estadosMaterias');
-  return guardados ? JSON.parse(guardados) : {};
-}
+// Cambiar estado al hacer clic
+function cambiarEstado(id, boton) {
+  const estadoActual = estadoMaterias[id];
 
-// Verifica si las correlativas están aprobadas
-function puedeMarcar(materia, estadosMaterias) {
-  if (materia.correlativas.length === 0) return true; // Sin correlativas
-  return materia.correlativas.every(id => estadosMaterias[id] === 'aprobada');
-}
-
-function crearMateriaElemento(materia, estadosMaterias) {
-  const div = document.createElement('div');
-  div.classList.add('materia');
-  div.textContent = materia.nombre;
-
-  // Estado inicial
-  const estadoActual = estadosMaterias[materia.id] || 'ninguno';
-
-  if (estadoActual === 'aprobada') {
-    div.classList.add('aprobada');
-  } else if (estadoActual === 'regularizada') {
-    div.classList.add('regularizada');
+  if (!estadoActual) {
+    estadoMaterias[id] = "regularizada";
+    boton.classList.add("regularizada");
+  } else if (estadoActual === "regularizada") {
+    estadoMaterias[id] = "aprobada";
+    boton.classList.remove("regularizada");
+    boton.classList.add("aprobada");
+  } else {
+    delete estadoMaterias[id];
+    boton.classList.remove("regularizada", "aprobada");
   }
 
-  // Click para cambiar estado
-  div.addEventListener('click', () => {
-    // Para aprobar, debe tener correlativas aprobadas
-    const estado = estadosMaterias[materia.id] || 'ninguno';
-    let siguienteEstado;
-
-    if (estado === 'ninguno') {
-      // Primero pasa a regularizada
-      siguienteEstado = 'regularizada';
-    } else if (estado === 'regularizada') {
-      // Si va a aprobar, verifica correlativas
-      if (!puedeMarcar(materia, estadosMaterias)) {
-        alert(`No puedes aprobar ${materia.nombre} sin aprobar antes sus correlativas.`);
-        return;
-      }
-      siguienteEstado = 'aprobada';
-    } else {
-      // De aprobado a ninguno (resetea)
-      siguienteEstado = 'ninguno';
-    }
-
-    estadosMaterias[materia.id] = siguienteEstado;
-    guardarEstados(estadosMaterias);
-    renderizarMalla();
-  });
-
-  return div;
+  localStorage.setItem("estadoMaterias", JSON.stringify(estadoMaterias));
 }
 
-function renderizarMalla() {
-  mallaContainer.innerHTML = '';
-  const estadosMaterias = cargarEstados();
-
-  materias.forEach(materia => {
-    const elem = crearMateriaElemento(materia, estadosMaterias);
-    // Set clases según estado actualizado
-    elem.classList.remove('aprobada', 'regularizada');
-    const estado = estadosMaterias[materia.id] || 'ninguno';
-    if (estado === 'aprobada') elem.classList.add('aprobada');
-    else if (estado === 'regularizada') elem.classList.add('regularizada');
-
-    mallaContainer.appendChild(elem);
-  });
-}
-
-// Primera renderización
-renderizarMalla();
-
+// Ejecutar
+crearMalla();
