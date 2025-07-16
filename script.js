@@ -1,3 +1,4 @@
+// Definimos las materias con correlatividades (ejemplo simplificado)
 const materias = [
   { nombre: "Matemática", anio: 1, cuatri: 1 },
   { nombre: "Física", anio: 1, cuatri: 1 },
@@ -37,21 +38,86 @@ const materias = [
   { nombre: "Práctica Profesional Supervisada", anio: 6, cuatri: 2, correlativas: ["Bioquímica Clínica II", "Bioquímica Clínica III"] },
 ];
 
-const grid = document.getElementById("grid");
+// Estados posibles para materias
+const estados = ['ninguno', 'regularizada', 'aprobada'];
 
-materias.forEach((mat) => {
-  const div = document.createElement("div");
-  div.classList.add("materia");
-  div.innerText = mat.nombre;
-  div.addEventListener("click", () => {
-    if (div.classList.contains("aprobada")) {
-      div.classList.remove("aprobada");
-    } else if (div.classList.contains("regularizada")) {
-      div.classList.remove("regularizada");
-      div.classList.add("aprobada");
+const mallaContainer = document.getElementById('malla-container');
+
+// Guardar estados en localStorage para persistencia
+function guardarEstados(estadosMaterias) {
+  localStorage.setItem('estadosMaterias', JSON.stringify(estadosMaterias));
+}
+
+function cargarEstados() {
+  const guardados = localStorage.getItem('estadosMaterias');
+  return guardados ? JSON.parse(guardados) : {};
+}
+
+// Verifica si las correlativas están aprobadas
+function puedeMarcar(materia, estadosMaterias) {
+  if (materia.correlativas.length === 0) return true; // Sin correlativas
+  return materia.correlativas.every(id => estadosMaterias[id] === 'aprobada');
+}
+
+function crearMateriaElemento(materia, estadosMaterias) {
+  const div = document.createElement('div');
+  div.classList.add('materia');
+  div.textContent = materia.nombre;
+
+  // Estado inicial
+  const estadoActual = estadosMaterias[materia.id] || 'ninguno';
+
+  if (estadoActual === 'aprobada') {
+    div.classList.add('aprobada');
+  } else if (estadoActual === 'regularizada') {
+    div.classList.add('regularizada');
+  }
+
+  // Click para cambiar estado
+  div.addEventListener('click', () => {
+    // Para aprobar, debe tener correlativas aprobadas
+    const estado = estadosMaterias[materia.id] || 'ninguno';
+    let siguienteEstado;
+
+    if (estado === 'ninguno') {
+      // Primero pasa a regularizada
+      siguienteEstado = 'regularizada';
+    } else if (estado === 'regularizada') {
+      // Si va a aprobar, verifica correlativas
+      if (!puedeMarcar(materia, estadosMaterias)) {
+        alert(`No puedes aprobar ${materia.nombre} sin aprobar antes sus correlativas.`);
+        return;
+      }
+      siguienteEstado = 'aprobada';
     } else {
-      div.classList.add("regularizada");
+      // De aprobado a ninguno (resetea)
+      siguienteEstado = 'ninguno';
     }
+
+    estadosMaterias[materia.id] = siguienteEstado;
+    guardarEstados(estadosMaterias);
+    renderizarMalla();
   });
-  grid.appendChild(div);
-});
+
+  return div;
+}
+
+function renderizarMalla() {
+  mallaContainer.innerHTML = '';
+  const estadosMaterias = cargarEstados();
+
+  materias.forEach(materia => {
+    const elem = crearMateriaElemento(materia, estadosMaterias);
+    // Set clases según estado actualizado
+    elem.classList.remove('aprobada', 'regularizada');
+    const estado = estadosMaterias[materia.id] || 'ninguno';
+    if (estado === 'aprobada') elem.classList.add('aprobada');
+    else if (estado === 'regularizada') elem.classList.add('regularizada');
+
+    mallaContainer.appendChild(elem);
+  });
+}
+
+// Primera renderización
+renderizarMalla();
+
