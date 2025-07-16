@@ -1,0 +1,32 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 10px;
+}
+
+#malla-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.materia {
+  border: 2px solid #444;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 8px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.materia.aprobada {
+  background-color: #c8f7c5;
+  border-color: #2a7f2a;
+}
+
+.materia.regularizada {
+  background-color: #f7f1c5;
+  border-color: #7f7a2a;
+}
