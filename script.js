@@ -1,277 +1,57 @@
 const materias = [
-  // --- 1er Año - 1er Cuatrimestre ---
-  {
-    nombre: "Química General",
-    id: "quimica-general",
-    anio: 1,
-    cuatrimestre: 1,
-    correlativas: []
-  },
-  {
-    nombre: "Matemática I",
-    id: "matematica-1",
-    anio: 1,
-    cuatrimestre: 1,
-    correlativas: []
-  },
-  {
-    nombre: "Física I",
-    id: "fisica-1",
-    anio: 1,
-    cuatrimestre: 1,
-    correlativas: []
-  },
-
-  // --- 1er Año - 2do Cuatrimestre ---
-  {
-    nombre: "Química Inorgánica",
-    id: "quimica-inorganica",
-    anio: 1,
-    cuatrimestre: 2,
-    correlativas: ["quimica-general"]
-  },
-  {
-    nombre: "Biología Celular",
-    id: "biologia-celular",
-    anio: 1,
-    cuatrimestre: 2,
-    correlativas: []
-  },
-  {
-    nombre: "Matemática II",
-    id: "matematica-2",
-    anio: 1,
-    cuatrimestre: 2,
-    correlativas: ["matematica-1"]
-  },
-
-  // --- 2do Año - 1er Cuatrimestre ---
-  {
-    nombre: "Química Orgánica I",
-    id: "quimica-organica-1",
-    anio: 2,
-    cuatrimestre: 1,
-    correlativas: ["quimica-general", "quimica-inorganica"]
-  },
-  {
-    nombre: "Física II",
-    id: "fisica-2",
-    anio: 2,
-    cuatrimestre: 1,
-    correlativas: ["fisica-1"]
-  },
-  {
-    nombre: "Estadística y Diseño Experimental",
-    id: "estadistica",
-    anio: 2,
-    cuatrimestre: 1,
-    correlativas: ["matematica-2"]
-  },
-
-  // --- 2do Año - 2do Cuatrimestre ---
-  {
-    nombre: "Química Orgánica II",
-    id: "quimica-organica-2",
-    anio: 2,
-    cuatrimestre: 2,
-    correlativas: ["quimica-organica-1"]
-  },
-  {
-    nombre: "Fisicoquímica",
-    id: "fisicoquimica",
-    anio: 2,
-    cuatrimestre: 2,
-    correlativas: ["quimica-inorganica", "fisica-2"]
-  },
-  {
-    nombre: "Biología Molecular y Celular",
-    id: "biologia-molecular",
-    anio: 2,
-    cuatrimestre: 2,
-    correlativas: ["biologia-celular"]
-  },
-
-  // --- 3er Año - 1er Cuatrimestre ---
-  {
-    nombre: "Microbiología General",
-    id: "microbiologia",
-    anio: 3,
-    cuatrimestre: 1,
-    correlativas: ["biologia-molecular"]
-  },
-  {
-    nombre: "Química Biológica I",
-    id: "quimica-biologica-1",
-    anio: 3,
-    cuatrimestre: 1,
-    correlativas: ["quimica-organica-2", "biologia-molecular"]
-  },
-  {
-    nombre: "Instrumental I",
-    id: "instrumental-1",
-    anio: 3,
-    cuatrimestre: 1,
-    correlativas: ["fisicoquimica"]
-  },
-
-  // --- 3er Año - 2do Cuatrimestre ---
-  {
-    nombre: "Inmunología",
-    id: "inmunologia",
-    anio: 3,
-    cuatrimestre: 2,
-    correlativas: ["quimica-biologica-1"]
-  },
-  {
-    nombre: "Química Biológica II",
-    id: "quimica-biologica-2",
-    anio: 3,
-    cuatrimestre: 2,
-    correlativas: ["quimica-biologica-1"]
-  },
-  {
-    nombre: "Bromatología",
-    id: "bromatologia",
-    anio: 3,
-    cuatrimestre: 2,
-    correlativas: ["quimica-biologica-1"]
-  },
-
-  // --- 4to Año - 1er Cuatrimestre ---
-  {
-    nombre: "Farmacología",
-    id: "farmacologia",
-    anio: 4,
-    cuatrimestre: 1,
-    correlativas: ["quimica-biologica-2"]
-  },
-  {
-    nombre: "Fisiología",
-    id: "fisiologia",
-    anio: 4,
-    cuatrimestre: 1,
-    correlativas: ["quimica-biologica-2"]
-  },
-  {
-    nombre: "Instrumental II",
-    id: "instrumental-2",
-    anio: 4,
-    cuatrimestre: 1,
-    correlativas: ["instrumental-1"]
-  },
-
-  // --- 4to Año - 2do Cuatrimestre ---
-  {
-    nombre: "Toxicología",
-    id: "toxicologia",
-    anio: 4,
-    cuatrimestre: 2,
-    correlativas: ["quimica-biologica-2", "farmacologia"]
-  },
-  {
-    nombre: "Endocrinología",
-    id: "endocrinologia",
-    anio: 4,
-    cuatrimestre: 2,
-    correlativas: ["fisiologia"]
-  },
-  {
-    nombre: "Legislación y Deontología",
-    id: "legislacion",
-    anio: 4,
-    cuatrimestre: 2,
-    correlativas: []
-  },
-
-  // --- 5to Año ---
-  {
-    nombre: "Bioquímica Clínica",
-    id: "bioquimica-clinica",
-    anio: 5,
-    cuatrimestre: 1,
-    correlativas: ["toxicologia", "endocrinologia"]
-  },
-  {
-    nombre: "Trabajo Final",
-    id: "trabajo-final",
-    anio: 5,
-    cuatrimestre: 2,
-    correlativas: ["bioquimica-clinica"]
-  }
+  { nombre: "Matemática", anio: 1, cuatri: 1 },
+  { nombre: "Física", anio: 1, cuatri: 1 },
+  { nombre: "Química General", anio: 1, cuatri: 1 },
+  { nombre: "Matemática II", anio: 1, cuatri: 2, correlativas: ["Matemática"] },
+  { nombre: "Física II", anio: 1, cuatri: 2, correlativas: ["Física", "Matemática"] },
+  { nombre: "Química Inorgánica", anio: 1, cuatri: 2, correlativas: ["Física", "Química General"] },
+  { nombre: "Biología", anio: 2, cuatri: 1, correlativas: ["Química General"] },
+  { nombre: "Química Orgánica", anio: 2, cuatri: 1, correlativas: ["Química General", "Química Inorgánica"] },
+  { nombre: "Química Analítica I", anio: 2, cuatri: 1, correlativas: ["Química General", "Química Inorgánica"] },
+  { nombre: "Química Orgánica II", anio: 2, cuatri: 2, correlativas: ["Química Inorgánica", "Química Orgánica"] },
+  { nombre: "Química Analítica II", anio: 2, cuatri: 2, correlativas: ["Física II", "Química Analítica I"] },
+  { nombre: "Fisicoquímica", anio: 2, cuatri: 2, correlativas: ["Física II", "Química Analítica I"] },
+  { nombre: "Bioestadística", anio: 3, cuatri: 1, correlativas: ["Matemática II", "Biología"] },
+  { nombre: "Química Biológica I", anio: 3, cuatri: 1, correlativas: ["Biología", "Química Orgánica II", "Química Analítica II", "Fisicoquímica"] },
+  { nombre: "Anatomía Humana y Animales de Laboratorio", anio: 3, cuatri: 1, correlativas: ["Biología"] },
+  { nombre: "Inglés Técnico", anio: 3, cuatri: 1 },
+  { nombre: "Fisiología", anio: 3, cuatri: 2, correlativas: ["Química Biológica I", "Anatomía Humana y Animales de Laboratorio"] },
+  { nombre: "Química Biológica II", anio: 3, cuatri: 2, correlativas: ["Anatomía Humana y Animales de Laboratorio", "Química Biológica I"] },
+  { nombre: "Histología Normal y Elementos de Histopatología", anio: 3, cuatri: 2, correlativas: ["Anatomía Humana y Animales de Laboratorio"] },
+  { nombre: "Informática", anio: 4, cuatri: 1 },
+  { nombre: "Microbiología General", anio: 4, cuatri: 1, correlativas: ["Química Biológica I"] },
+  { nombre: "Inmunología Básica", anio: 4, cuatri: 1, correlativas: ["Fisiología", "Química Biológica II", "Histología Normal y Elementos de Histopatología"] },
+  { nombre: "Biología Celular", anio: 4, cuatri: 2 },
+  { nombre: "Elementos de Farmacodinamia", anio: 4, cuatri: 2, correlativas: ["Fisiología"] },
+  { nombre: "Inmunología Clínica", anio: 4, cuatri: 2, correlativas: ["Microbiología General", "Inmunología Básica"] },
+  { nombre: "Bioquímica Clínica I", anio: 5, cuatri: 1, correlativas: ["Biología Celular", "Inmunología Básica"] },
+  { nombre: "Bacteriología", anio: 5, cuatri: 1, correlativas: ["Inmunología Básica", "Elementos de Farmacodinamia"] },
+  { nombre: "Bromatología", anio: 5, cuatri: 1, correlativas: ["Microbiología General"] },
+  { nombre: "Bioquímica Clínica II", anio: 5, cuatri: 2, correlativas: ["Bioquímica Clínica I"] },
+  { nombre: "Virología", anio: 5, cuatri: 2, correlativas: ["Microbiología General", "Inmunología Clínica"] },
+  { nombre: "Micología", anio: 5, cuatri: 2, correlativas: ["Inmunología Clínica", "Bacteriología"] },
+  { nombre: "Bioquímica Clínica III", anio: 6, cuatri: 1, correlativas: ["Bioquímica Clínica II"] },
+  { nombre: "Parasitología", anio: 6, cuatri: 1, correlativas: ["Inmunología Clínica"] },
+  { nombre: "Toxicología", anio: 6, cuatri: 1, correlativas: ["Química Biológica II", "Elementos de Farmacodinamia", "Bioquímica Clínica I"] },
+  { nombre: "Epistemología y Metodología...", anio: 6, cuatri: 1 },
+  { nombre: "Práctica Profesional Supervisada", anio: 6, cuatri: 2, correlativas: ["Bioquímica Clínica II", "Bioquímica Clínica III"] },
 ];
 
-function crearMalla() {
-  const contenedor = document.getElementById("malla");
-  contenedor.innerHTML = "";
+const grid = document.getElementById("grid");
 
-  for (let anio = 1; anio <= 5; anio++) {
-    for (let cuatri = 1; cuatri <= 2; cuatri++) {
-      const materiasCuatri = materias.filter(
-        (m) => m.anio === anio && m.cuatrimestre === cuatri
-      );
-      if (materiasCuatri.length > 0) {
-        const bloque = document.createElement("div");
-        bloque.className = "bloque-anio";
-        bloque.innerHTML = `<h2>${anio}° Año - ${cuatri}° Cuatrimestre</h2>`;
-        materiasCuatri.forEach((materia) => {
-          const card = crearTarjetaMateria(materia);
-          bloque.appendChild(card);
-        });
-        contenedor.appendChild(bloque);
-      }
+materias.forEach((mat) => {
+  const div = document.createElement("div");
+  div.classList.add("materia");
+  div.innerText = mat.nombre;
+  div.addEventListener("click", () => {
+    if (div.classList.contains("aprobada")) {
+      div.classList.remove("aprobada");
+    } else if (div.classList.contains("regularizada")) {
+      div.classList.remove("regularizada");
+      div.classList.add("aprobada");
+    } else {
+      div.classList.add("regularizada");
     }
-  }
-}
-
-function crearTarjetaMateria(materia) {
-  const card = document.createElement("div");
-  card.className = "materia";
-  card.id = materia.id;
-
-  const titulo = document.createElement("h3");
-  titulo.textContent = materia.nombre;
-
-  const regularizada = document.createElement("input");
-  regularizada.type = "checkbox";
-  regularizada.id = `${materia.id}-reg`;
-  regularizada.addEventListener("change", () => actualizarEstado(materia.id));
-
-  const aprobada = document.createElement("input");
-  aprobada.type = "checkbox";
-  aprobada.id = `${materia.id}-apr`;
-  aprobada.addEventListener("change", () => actualizarEstado(materia.id));
-
-  const labelR = document.createElement("label");
-  labelR.htmlFor = regularizada.id;
-  labelR.textContent = "Reg.";
-
-  const labelA = document.createElement("label");
-  labelA.htmlFor = aprobada.id;
-  labelA.textContent = "Apr.";
-
-  card.appendChild(titulo);
-  card.appendChild(regularizada);
-  card.appendChild(labelR);
-  card.appendChild(aprobada);
-  card.appendChild(labelA);
-
-  return card;
-}
-
-function actualizarEstado(id) {
-  const materia = materias.find((m) => m.id === id);
-  const reg = document.getElementById(`${id}-reg`);
-  const apr = document.getElementById(`${id}-apr`);
-
-  const puedeAprobar = materia.correlativas.every((correlativaId) => {
-    const checkAprobada = document.getElementById(`${correlativaId}-apr`);
-    return checkAprobada && checkAprobada.checked;
   });
-
-  if (apr.checked && !puedeAprobar) {
-    alert("No podés marcar esta materia como aprobada sin cumplir sus correlativas.");
-    apr.checked = false;
-  }
-}
-
-document.addEventListener("DOMContentLoaded", crearMalla);
+  grid.appendChild(div);
+});
